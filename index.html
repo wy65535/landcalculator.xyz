@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free land loan calculator - Calculate monthly payments, total interest, and amortization for raw land, farm land, and vacant land mortgages. Compare loan options and plan your land purchase.">
+    <meta name="keywords" content="land loan calculator, raw land loan calculator, farm land loan calculator, vacant land mortgage calculator, land loan payment calculator, construction land loan, land financing calculator">
+    <meta name="author" content="Land Calculator">
+    <meta property="og:title" content="Land Loan Calculator - Calculate Your Land Mortgage Payments">
+    <meta property="og:description" content="Free land loan calculator with advanced features. Calculate payments, compare loan options, and visualize your amortization schedule.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://landcalculator.xyz">
+    <link rel="canonical" href="https://landcalculator.xyz">
+    <title>Land Loan Calculator - Calculate Land Mortgage Payments & Interest | Free Tool</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Land Loan Calculator",
+        "description": "Calculate monthly payments and total interest for land loans including raw land, farm land, and vacant land mortgages.",
+        "url": "https://landcalculator.xyz",
+        "applicationCategory": "FinanceApplication",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="nav-brand">
+                    <h1>🏞️ Land Loan Calculator</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Calculator</a></li>
+                    <li><a href="guide.html">Guide</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h2>Free Land Loan Calculator</h2>
+                <p class="subtitle">Calculate monthly payments for raw land, farm land, and vacant land mortgages. Compare loan options and visualize your payment schedule with our advanced calculator.</p>
+            </div>
+        </section>
+
+        <section class="calculator-section">
+            <div class="container">
+                <div class="calculator-layout">
+                    <div class="calculator-inputs">
+                        <h3>Loan Details</h3>
+                        
+                        <div class="input-group">
+                            <label for="landPrice">Land Purchase Price ($)</label>
+                            <input type="number" id="landPrice" value="100000" min="1000" step="1000">
+                            <small>Total price of the land you're purchasing</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="downPayment">Down Payment (%)</label>
+                            <input type="range" id="downPayment" min="0" max="50" value="20" step="1">
+                            <div class="range-labels">
+                                <span id="downPaymentValue">20%</span>
+                                <span id="downPaymentAmount">$20,000</span>
+                            </div>
+                            <small>Most land loans require 20-50% down payment</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="interestRate">Interest Rate (%)</label>
+                            <input type="number" id="interestRate" value="7.5" min="0.1" max="30" step="0.1">
+                            <small>Current land loan rates typically range 5-12%</small>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="loanTerm">Loan Term (Years)</label>
+                            <select id="loanTerm">
+                                <option value="5">5 Years</option>
+                                <option value="10">10 Years</option>
+                                <option value="15" selected>15 Years</option>
+                                <option value="20">20 Years</option>
+                                <option value="25">25 Years</option>
+                                <option value="30">30 Years</option>
+                            </select>
+                        </div>
+
+                        <div class="advanced-toggle">
+                            <button type="button" id="toggleAdvanced">⚙️ Advanced Options</button>
+                        </div>
+
+                        <div id="advancedOptions" class="advanced-options" style="display: none;">
+                            <h4>Additional Costs</h4>
+                            
+                            <div class="input-group">
+                                <label for="propertyTax">Annual Property Tax ($)</label>
+                                <input type="number" id="propertyTax" value="1200" min="0" step="100">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="insurance">Annual Insurance ($)</label>
+                                <input type="number" id="insurance" value="500" min="0" step="50">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="closingCosts">Closing Costs ($)</label>
+                                <input type="number" id="closingCosts" value="3000" min="0" step="500">
+                                <small>Typically 2-5% of purchase price</small>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="surveyFee">Survey & Inspection Fees ($)</label>
+                                <input type="number" id="surveyFee" value="1500" min="0" step="100">
+                            </div>
+
+                            <div class="input-group">
+                                <label for="extraPayment">Extra Monthly Payment ($)</label>
+                                <input type="number" id="extraPayment" value="0" min="0" step="50">
+                                <small>Reduce interest by paying extra each month</small>
+                            </div>
+                        </div>
+
+                        <button class="calculate-btn" id="calculateBtn">Calculate Loan</button>
+                        <button class="reset-btn" id="resetBtn">Reset</button>
+                    </div>
+
+                    <div class="calculator-results">
+                        <h3>Results Summary</h3>
+                        <div class="result-cards">
+                            <div class="result-card">
+                                <div class="result-label">Monthly Payment</div>
+                                <div class="result-value" id="monthlyPayment">$0</div>
+                                <small>Principal + Interest</small>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">Total Monthly Cost</div>
+                                <div class="result-value" id="totalMonthlyCost">$0</div>
+                                <small>Including taxes & insurance</small>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">Loan Amount</div>
+                                <div class="result-value" id="loanAmount">$0</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">Total Interest</div>
+                                <div class="result-value" id="totalInterest">$0</div>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">Total Cost</div>
+                                <div class="result-value" id="totalCost">$0</div>
+                                <small>Loan + Interest + Fees</small>
+                            </div>
+                            <div class="result-card">
+                                <div class="result-label">Payoff Date</div>
+                                <div class="result-value" id="payoffDate">-</div>
+                            </div>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="paymentChart"></canvas>
+                        </div>
+
+                        <div class="chart-container">
+                            <canvas id="balanceChart"></canvas>
+                        </div>
+
+                        <div class="breakdown-section">
+                            <h4>Payment Breakdown</h4>
+                            <div id="paymentBreakdown"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="amortization-section">
+                    <h3>Amortization Schedule</h3>
+                    <div class="schedule-controls">
+                        <button class="schedule-btn active" data-view="yearly">Yearly</button>
+                        <button class="schedule-btn" data-view="monthly">Monthly</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="amortizationTable">
+                            <thead>
+                                <tr>
+                                    <th>Period</th>
+                                    <th>Payment</th>
+                                    <th>Principal</th>
+                                    <th>Interest</th>
+                                    <th>Balance</th>
+                                </tr>
+                            </thead>
+                            <tbody id="amortizationBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="info-section">
+            <div class="container">
+                <h2>Understanding Land Loans</h2>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>🏗️ Types of Land Loans</h3>
+                        <ul>
+                            <li><strong>Raw Land Loan:</strong> Undeveloped land with no utilities or infrastructure</li>
+                            <li><strong>Unimproved Land Loan:</strong> Land with some access but limited utilities</li>
+                            <li><strong>Improved Land Loan:</strong> Land with roads, utilities, and ready to build</li>
+                            <li><strong>Farm Land Loan:</strong> Agricultural land for farming purposes</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>💰 Key Factors</h3>
+                        <ul>
+                            <li><strong>Higher Down Payments:</strong> Typically 20-50% required</li>
+                            <li><strong>Higher Interest Rates:</strong> Usually 1-2% higher than home mortgages</li>
+                            <li><strong>Shorter Terms:</strong> Often 10-20 years instead of 30</li>
+                            <li><strong>Location Matters:</strong> Access to utilities and roads affects rates</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>📊 Important Considerations</h3>
+                        <ul>
+                            <li>Land surveys and environmental assessments</li>
+                            <li>Zoning regulations and building restrictions</li>
+                            <li>Property taxes and ongoing maintenance</li>
+                            <li>Future development plans and potential</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <h3>✅ Tips for Success</h3>
+                        <ul>
+                            <li>Shop multiple lenders for best rates</li>
+                            <li>Consider credit unions and farm credit systems</li>
+                            <li>Have clear plans for land use</li>
+                            <li>Factor in all additional costs and fees</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="keyword-section">
+            <div class="container">
+                <h2>Land Loan Calculator Resources</h2>
+                <div class="keyword-grid">
+                    <div class="keyword-card">
+                        <h4>🌾 Farm Land Financing</h4>
+                        <p>Calculate farm land loan payments with special considerations for agricultural properties. Our calculator helps farmers plan their land purchase financing.</p>
+                    </div>
+                    <div class="keyword-card">
+                        <h4>🏜️ Raw Land Calculator</h4>
+                        <p>Raw land loans require higher down payments. Use our tool to estimate costs for undeveloped land purchases.</p>
+                    </div>
+                    <div class="keyword-card">
+                        <h4>🏘️ Vacant Land Mortgage</h4>
+                        <p>Calculate vacant land mortgage payments and compare different loan scenarios for your land investment.</p>
+                    </div>
+                    <div class="keyword-card">
+                        <h4>🏗️ Construction Land Loan</h4>
+                        <p>Planning to build? Calculate construction land loan payments and factor in additional development costs.</p>
+                    </div>
+                    <div class="keyword-card">
+                        <h4>📈 Land Investment Analysis</h4>
+                        <p>Analyze the true cost of land ownership including taxes, insurance, and maintenance over time.</p>
+                    </div>
+                    <div class="keyword-card">
+                        <h4>💵 Land Loan Payment Estimator</h4>
+                        <p>Get accurate payment estimates with our comprehensive land loan calculator including all fees and costs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Why Use Our Land Loan Calculator?</h2>
+                <div class="cta-grid">
+                    <div class="cta-card">
+                        <div class="cta-icon">🎯</div>
+                        <h3>Accurate Calculations</h3>
+                        <p>Get precise monthly payment estimates including principal, interest, taxes, and insurance.</p>
+                    </div>
+                    <div class="cta-card">
+                        <div class="cta-icon">📊</div>
+                        <h3>Visual Analysis</h3>
+                        <p>Interactive charts show payment breakdown and amortization schedule over time.</p>
+                    </div>
+                    <div class="cta-card">
+                        <div class="cta-icon">⚡</div>
+                        <h3>Free & Easy</h3>
+                        <p>100% free calculator with no registration required. Start calculating immediately.</p>
+                    </div>
+                    <div class="cta-card">
+                        <div class="cta-icon">🔧</div>
+                        <h3>Advanced Features</h3>
+                        <p>Include closing costs, extra payments, and compare different loan scenarios.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Land Calculator</h4>
+                    <p>Free land loan calculator helping you make informed decisions about land financing and mortgages.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="guide.html">Land Loan Guide</a></li>
+                        <li><a href="faq.html">FAQ</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="privacy.html">Privacy Policy</a></li>
+                        <li><a href="terms.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Calculator Types</h4>
+                    <ul>
+                        <li>Raw Land Loan Calculator</li>
+                        <li>Farm Land Calculator</li>
+                        <li>Vacant Land Mortgage</li>
+                        <li>Construction Land Loan</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 LandCalculator.xyz - All rights reserved. This calculator provides estimates only and should not be considered financial advice.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="calculator.js"></script>
+</body>
+</html>
+
